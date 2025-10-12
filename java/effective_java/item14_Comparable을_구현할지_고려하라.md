@@ -4,7 +4,7 @@
 > * Java 8 이후엔 `Comparator` 체이닝을 사용해 간결하게 작성하자.
 > * “객체의 본질적인 순서”가 존재하지 않는다면 `Comparable` 대신 `Comparator`를 사용하는 것이 낫다.
 
-## Comparable 인터페이스 개념
+## 1. Comparable 인터페이스 개념
 
 * `Comparable` 인터페이스는 **객체 간의 자연적인 순서를 정의하는 표준 방법**을 제공한다.
 * `equals`가 "같다"는 개념을 정의한다면, `compareTo`는 "**순서**"의 개념을 정의한다.
@@ -18,7 +18,7 @@ public interface Comparable<T> {
 
 ---
 
-## Comparable의 일반 규약
+## 2. Comparable의 일반 규약
 
 `compareTo` 메서드는 다음과 같은 규약을 지켜야 한다.
 
@@ -44,9 +44,7 @@ public interface Comparable<T> {
         * 예: `BigDecimal("1.0")`과 `BigDecimal("1.00")`은 `compareTo`로는 같지만, `equals`로는 다르다.
         * 이런 경우, `TreeSet`이나 `TreeMap`에서는 한 객체만 저장된다.
 
----
-
-## 구현 예시
+### 1) Comparable 구현 예시
 
 ```java
 public class PhoneNumber implements Comparable<PhoneNumber> {
@@ -66,7 +64,7 @@ public class PhoneNumber implements Comparable<PhoneNumber> {
 }
 ```
 
-### 단순 비교를 위해 `Comparator`의 정적 메서드 활용 가능 (Java 8+)
+## 3. 단순 비교를 위해 `Comparator`의 정적 메서드 활용 가능 (Java 8+)
 
 ```java
 public class PhoneNumber implements Comparable<PhoneNumber> {
@@ -83,12 +81,11 @@ public class PhoneNumber implements Comparable<PhoneNumber> {
     }
 }
 ```
-
 이 방법은 코드의 **가독성**, **유지보수성**, **안전성**이 높다.
 
 ---
 
-## compareTo 구현 시 주의사항
+## 4. compareTo 구현 시 주의사항
 
 ### 1) <, > 연산자 대신 `compare`나 `compareTo` 사용
 
@@ -121,7 +118,7 @@ return Integer.compare(this.value, o.value);
 
 ---
 
-## 실무에서의 활용 포인트
+## 5. 실무에서의 활용 포인트
 
 | 상황                                     | 추천 방법                                        | 이유                                |
 | -------------------------------------- | -------------------------------------------- | --------------------------------- |
@@ -130,8 +127,8 @@ return Integer.compare(this.value, o.value);
 | 복합 정렬 필요                               | `Comparator.comparing()` + `thenComparing()` | 체이닝 방식으로 직관적 표현                   |
 
 ---
-## Comparator 사용 예시
-### 1. 기본적인 단일 Comparator
+## 6. Comparator 사용 예시
+### 1) 기본적인 단일 Comparator
 ```java
  Comparator<Person> byAge = Comparator.comparingInt(Person::getAge);
 ```
@@ -139,7 +136,7 @@ return Integer.compare(this.value, o.value);
 - 내부적으로 Integer.compare()를 사용
 - Person 객체를 Collections.sort()나 stream.sorted()에서 바로 사용할 수 있음
 
-### 2. 다중 필드 비교 (기본 체이닝)
+### 2) 다중 필드 비교 (기본 체이닝)
 ```java
  Comparator<Person> byAgeThenName =
         Comparator.comparingInt(Person::getAge)
@@ -149,7 +146,7 @@ return Integer.compare(this.value, o.value);
 - 예: 같은 나이면 이름순으로 정렬
 - 가독성이 좋고, 명시적이다
 
-### 3. 역순 정렬 (reversed)
+### 3) 역순 정렬 (reversed)
 ```java
  Comparator<Person> byAgeDescThenName =
      Comparator.comparingInt(Person::getAge)
@@ -158,7 +155,7 @@ return Integer.compare(this.value, o.value);
 ```
 - reversed()는 결과 순서를 뒤집음
 
-### 4. Null-safe 정렬 (nullsFirst / nullsLast)
+### 4) Null-safe 정렬 (nullsFirst / nullsLast)
 예시: null 이름은 뒤로 보내기
 ```java
 Comparator<Person> byNameNullLast =
@@ -169,14 +166,14 @@ Comparator<Person> byNameNullLast =
 - 실무에서 DB나 외부 API 응답값에 null이 섞일 경우 매우 유용
 
 ---
-## Comparator의 `comparingInt()`와 `comparing()`의 차이
+## 7. Comparator의 `comparingInt()`와 `comparing()`의 차이
 ```java
 Comparator<Person> byAge = Comparator.comparingInt(Person::getAge); // OK
 Comparator<Person> byAge = Comparator.comparing(Person::getAge); // OK
 ```
 comaringInt 메서드를 사용하지 않아도 comparing은 타입 추론이 된다.
 
-### 1. `Comparator.comparing()`의 선언부 (JDK 17 기준)
+### 1) `Comparator.comparing()`의 선언부 (JDK 17 기준)
 
 ```java
 public static <T, U extends Comparable<? super U>>
@@ -200,7 +197,7 @@ Comparator.comparing(Person::getAge)
 
 ---
 
-### 2.`comparingInt()` 선언부
+### 2)`comparingInt()` 선언부
 
 ```java
 public static <T> Comparator<T> comparingInt(ToIntFunction<? super T> keyExtractor)
