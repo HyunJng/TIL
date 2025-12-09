@@ -12,6 +12,8 @@
 ## Spring
 - [Spring에서 @Value와 멤버변수 정의 순서](https://github.com/HyunJng/TIL/blob/main/spring/%40Value%EC%99%80_%EB%A9%A4%EB%B2%84%EB%B3%80%EC%88%98_%EC%B4%88%EA%B8%B0%ED%99%94_%EC%88%9C%EC%84%9C.md)
 
+## Kafka
+- [카프카 완벽 가이드](/kafka/카프카_완벽_가이드.md)
 ## Docker
 - [도커 기초 학습](/docker/도커_기초.md)
 
