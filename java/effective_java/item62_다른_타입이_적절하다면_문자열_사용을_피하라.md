@@ -1,4 +1,4 @@
-# item 62. 다른 타입이 적절하다면 문자열 사용을 피하라 (TIL)
+# item 62. 다른 타입이 적절하다면 문자열 사용을 피하라
 > * 적절한 타입이 있다면 **절대 문자열로 우회하지 말 것**.
     → 타입을 정의하는 것이 비용처럼 보일 수 있지만, 장기적으로 유지보수성과 안정성을 크게 높인다.
 
@@ -51,3 +51,33 @@
 * `enum`으로 상태를 표현해 **타입 안전성** 확보
 * 여러 데이터를 담아야 한다면 **클래스 or 레코드(record)** 형태로 구조화
 * 설정값, 권한 등의 키에는 **별도 타입** 또는 **정적 상수 집합** 활용
+
+---
+> 추가적으로 궁금해져서 공부
+### 실무에서 String을 Key로 사용하는 것은 권장된다
+* String은 불변이고
+* hashCode()가 캐싱되어 빠르고 안저억이고
+* equals() 구현도 완벽하기 때문이다
+
+그래서 아래 예시처럼 ** 문자열이 "데이터 자체"일 때는 문자열 key가 최선"이다
+```java
+Map<String, User> userByEmail;
+Map<String, Integer> productCountByName;
+Map<String, String> headers;
+```
+
+### item 62가 비판하는 "문자열 Key 남용"케이스
+문제가 되는 것은 **문자열 데이터가 아닌데 문자열 key를 쓰는 상황**이다
+* 문자열이 “텍스트”가 아니라
+* 타입, 역할, 도메인 개념을 표현하기 위해 쓰이는 경우
+```java
+Map<String, Object> context;
+context.put("USER_ID", 1234);   // user id라는 개념을 문자열로 표현
+context.put("ROLE", "ADMIN");   // role이라는 enum 개념을 문자열로 표현
+context.put("TX", 1030);        // transaction id라는 타입을 문자열로 표현
+```
+"원래 타입이 되어야 하는 곳"을 대체하는 것은 문자열 남용이다.
+
+### 책에나온 ThreadLocal 예시의 리팩토링의 이유
+* 준아님이 발표때 얘기한대로 String이 Key가 되면 ThreadLocal 목적이 충족되지 않을 수 있어서 첫번쨰 리팩토링을 함.
+* ThreadLocal은 객체 자체에 Hash가 부여된다는 특성이 있으니 객제 자체가 Key역할을 할 수 있기에 두번째 리팩토링을 함
