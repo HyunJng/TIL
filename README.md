@@ -17,8 +17,14 @@
 
 ## Kafka
 - [카프카 완벽 가이드](/kafka/카프카_완벽_가이드.md)
+
 ## Docker
 - [도커 기초 학습](/docker/도커_기초.md)
 
 ## Design Pattern
 - [헤드퍼스트 디자인패턴](/design_pattern/헤드퍼스트_디자인패턴.md)
+
+## WEB
+- [cors.md](/web/cors.md)
+- [csrf.md](/web/csrf.md)
+- [용어정리.md](/web/%EC%9A%A9%EC%96%B4%EC%A0%95%EB%A6%AC.md)
