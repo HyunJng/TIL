@@ -27,6 +27,9 @@
 ## Design Pattern
 - [헤드퍼스트 디자인패턴](/design_pattern/헤드퍼스트_디자인패턴.md)
 
+## React
+- [한 입 크기로 잘라먹는 리액트](./react/한입크기로_잘라_먹는_리액트.md)
+
 ## WEB
 - [cors](/web/cors.md)
 - [csrf](/web/csrf.md)
